@@ -44,6 +44,8 @@ class TableViewController: UITableViewController {
         if toDoItemCurrent == nil {
             toDoItemCurrent = rootItem
         }
+        
+        navigationItem.title = toDoItemCurrent?.name
     }
 
     // MARK: - Table view data source
@@ -65,9 +67,19 @@ class TableViewController: UITableViewController {
         return cell
     }
     
+    // MARK: - Next view
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let subItem = toDoItemCurrent?.subItems[indexPath.row]
+        let tvc = storyboard?.instantiateViewController(identifier: "todoID") as! TableViewController
+        tvc.toDoItemCurrent = subItem
+        navigationController?.pushViewController(tvc, animated: true)
+    }
+    
+    // MARK: - Delete cell
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             toDoItemCurrent?.removeSubItem(index: indexPath.row)

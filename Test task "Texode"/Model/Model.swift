@@ -20,7 +20,7 @@ func loadData() {
     if let dict = NSDictionary.init(contentsOfFile: pathForSaveData){
         rootItem = TodoItem(dictionary: dict)
     } else {
-        rootItem = TodoItem(name: "File is not find")
+        rootItem = TodoItem(name: "Texode task")
     }
 }
     
