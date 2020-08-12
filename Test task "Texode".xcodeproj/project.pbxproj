@@ -9,21 +9,25 @@
 /* Begin PBXBuildFile section */
 		2CB24A9724E3CC8B001941EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB24A9624E3CC8B001941EF /* AppDelegate.swift */; };
 		2CB24A9924E3CC8B001941EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB24A9824E3CC8B001941EF /* SceneDelegate.swift */; };
-		2CB24A9B24E3CC8B001941EF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB24A9A24E3CC8B001941EF /* ViewController.swift */; };
 		2CB24A9E24E3CC8B001941EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CB24A9C24E3CC8B001941EF /* Main.storyboard */; };
 		2CB24AA024E3CC92001941EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CB24A9F24E3CC92001941EF /* Assets.xcassets */; };
 		2CB24AA324E3CC92001941EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CB24AA124E3CC92001941EF /* LaunchScreen.storyboard */; };
+		2CB24AAC24E3CCF5001941EF /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB24AAB24E3CCF5001941EF /* TodoItem.swift */; };
+		2CB24AAE24E3CE08001941EF /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB24AAD24E3CE08001941EF /* Model.swift */; };
+		2CB24AB024E3CF03001941EF /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB24AAF24E3CF03001941EF /* TableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2CB24A9324E3CC8B001941EF /* Test task "Texode".app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test task \"Texode\".app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB24A9624E3CC8B001941EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CB24A9824E3CC8B001941EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2CB24A9A24E3CC8B001941EF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2CB24A9D24E3CC8B001941EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2CB24A9F24E3CC92001941EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2CB24AA224E3CC92001941EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2CB24AA424E3CC92001941EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2CB24AAB24E3CCF5001941EF /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
+		2CB24AAD24E3CE08001941EF /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		2CB24AAF24E3CF03001941EF /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +60,25 @@
 		2CB24A9524E3CC8B001941EF /* Test task "Texode" */ = {
 			isa = PBXGroup;
 			children = (
+				2CB24AAA24E3CCBB001941EF /* Model */,
 				2CB24A9624E3CC8B001941EF /* AppDelegate.swift */,
 				2CB24A9824E3CC8B001941EF /* SceneDelegate.swift */,
-				2CB24A9A24E3CC8B001941EF /* ViewController.swift */,
+				2CB24AAF24E3CF03001941EF /* TableViewController.swift */,
 				2CB24A9C24E3CC8B001941EF /* Main.storyboard */,
 				2CB24A9F24E3CC92001941EF /* Assets.xcassets */,
 				2CB24AA124E3CC92001941EF /* LaunchScreen.storyboard */,
 				2CB24AA424E3CC92001941EF /* Info.plist */,
 			);
 			path = "Test task \"Texode\"";
+			sourceTree = "<group>";
+		};
+		2CB24AAA24E3CCBB001941EF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2CB24AAB24E3CCF5001941EF /* TodoItem.swift */,
+				2CB24AAD24E3CE08001941EF /* Model.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,8 +152,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CB24A9B24E3CC8B001941EF /* ViewController.swift in Sources */,
+				2CB24AAE24E3CE08001941EF /* Model.swift in Sources */,
 				2CB24A9724E3CC8B001941EF /* AppDelegate.swift in Sources */,
+				2CB24AAC24E3CCF5001941EF /* TodoItem.swift in Sources */,
+				2CB24AB024E3CF03001941EF /* TableViewController.swift in Sources */,
 				2CB24A9924E3CC8B001941EF /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
