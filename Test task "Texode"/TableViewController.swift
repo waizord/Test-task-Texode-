@@ -12,6 +12,16 @@ class TableViewController: UITableViewController {
     
     var toDoItemCurrent: TodoItem?
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if toDoItemCurrent == nil {
+            toDoItemCurrent = rootItem
+        }
+        
+        navigationItem.title = toDoItemCurrent?.name
+    }
+    
     @IBAction func pushAddAction(_ sender: Any) {
         
         let alert = UIAlertController(title: "Create new item", message: "", preferredStyle: .alert)
@@ -26,26 +36,13 @@ class TableViewController: UITableViewController {
                 saveData()
             }
         }
-        let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (alert) in
-        }
+        let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (alert) in}
         alert.addAction(alertActionCrate)
         alert.addAction(alertActionCancel)
         
         present(alert, animated: true, completion: nil)
         tableView.reloadData()
         saveData()
-        
-        
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if toDoItemCurrent == nil {
-            toDoItemCurrent = rootItem
-        }
-        
-        navigationItem.title = toDoItemCurrent?.name
     }
 
     // MARK: - Table view data source
