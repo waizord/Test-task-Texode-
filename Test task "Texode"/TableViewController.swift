@@ -28,7 +28,7 @@ class TableViewController: UITableViewController {
         alert.addTextField { (textField) in
             textField.placeholder = "ToDo item"
         }
-        let alertActionCrate = UIAlertAction(title: "Create", style: .default) { (alertAction) in
+        let alertActionCrate = UIAlertAction(title: "Create", style: .default) { (_) in
             if alert.textFields![0].text != ""{
                 let newItem = TodoItem(name: alert.textFields![0].text!)
                 self.toDoItemCurrent?.addSubItem(subItem: newItem)
@@ -36,7 +36,7 @@ class TableViewController: UITableViewController {
                 saveData()
             }
         }
-        let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (alert) in}
+        let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (_) in}
         alert.addAction(alertActionCrate)
         alert.addAction(alertActionCancel)
         
@@ -44,7 +44,38 @@ class TableViewController: UITableViewController {
         tableView.reloadData()
         saveData()
     }
-
+    
+    @IBAction func longPressEditAction(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let pointPress = sender.location(in: tableView)
+            //print(pointPress)
+            if let indexPath = tableView.indexPathForRow(at: pointPress){
+                //print(indexPath)
+            let cell = tableView.cellForRow(at: indexPath)
+                
+                let alert = UIAlertController(title: "Edit post", message: "", preferredStyle: .alert)
+                alert.addTextField { (textFild) in
+                    if let text = cell?.textLabel?.text {
+                        textFild.text = text
+                    }
+                }
+        
+                let alertActionEdit = UIAlertAction(title: "Edit", style: .default) { (_) in
+                    if alert.textFields![0].text != ""{
+                        let newItem = TodoItem(name: alert.textFields![0].text!)
+                        self.toDoItemCurrent?.renameSubItem(subItem: newItem, index: indexPath.row)
+                        self.tableView.reloadData()
+                        saveData()
+                    }
+                }
+                let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (_) in}
+                alert.addAction(alertActionEdit)
+                alert.addAction(alertActionCancel)
+                
+                present(alert, animated: true, completion: nil)
+            }
+        }
+    }
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -73,17 +104,12 @@ class TableViewController: UITableViewController {
     }
     
     // MARK: - Delete cell
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             toDoItemCurrent?.removeSubItem(index: indexPath.row)
             saveData()
             tableView.deleteRows(at: [indexPath], with: .fade)
-        }else if editingStyle == .insert {
-            
         }
     }
 }
