@@ -25,13 +25,19 @@ class TableViewController: UITableViewController {
     @IBAction func pushAddAction(_ sender: Any) {
         
         let alert = UIAlertController(title: "Create new item", message: "", preferredStyle: .alert)
-        alert.addTextField { (textField) in
-            textField.placeholder = "ToDo item"
+        alert.addTextField { (textName) in
+            textName.placeholder = "Title 1/250"
+            
+        }
+        alert.addTextField { (textDetail) in
+            textDetail.placeholder = "Message 1/1000"
+            
         }
         let alertActionCrate = UIAlertAction(title: "Create", style: .default) { (_) in
             if alert.textFields![0].text != ""{
-                let newItem = TodoItem(name: alert.textFields![0].text!)
+                let newItem = TodoItem(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
                 self.toDoItemCurrent?.addSubItem(subItem: newItem)
+                
                 self.tableView.reloadData()
                 saveData()
             }
@@ -54,16 +60,22 @@ class TableViewController: UITableViewController {
             let cell = tableView.cellForRow(at: indexPath)
                 
                 let alert = UIAlertController(title: "Edit post", message: "", preferredStyle: .alert)
-                alert.addTextField { (textFild) in
-                    if let text = cell?.textLabel?.text {
-                        textFild.text = text
+                alert.addTextField { (textName) in
+                    if let name = cell?.textLabel?.text {
+                        textName.text = name
+                    }
+                }
+                alert.addTextField { (textDetail) in
+                    if let detail = cell?.detailTextLabel?.text {
+                        textDetail.text = detail
                     }
                 }
         
                 let alertActionEdit = UIAlertAction(title: "Edit", style: .default) { (_) in
                     if alert.textFields![0].text != ""{
-                        let newItem = TodoItem(name: alert.textFields![0].text!)
+                        let newItem = TodoItem(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
                         self.toDoItemCurrent?.renameSubItem(subItem: newItem, index: indexPath.row)
+                        
                         self.tableView.reloadData()
                         saveData()
                     }
@@ -92,16 +104,19 @@ class TableViewController: UITableViewController {
 
         let itemForCell = toDoItemCurrent?.subItems[indexPath.row]
         cell.textLabel?.text = itemForCell?.name
+        if let text = itemForCell?.detail {
+            cell.detailTextLabel?.text = text
+        }
         return cell
     }
     
     // MARK: - Next view
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let subItem = toDoItemCurrent?.subItems[indexPath.row]
-        let tvc = storyboard?.instantiateViewController(identifier: "todoID") as! TableViewController
-        tvc.toDoItemCurrent = subItem
-        navigationController?.pushViewController(tvc, animated: true)
-    }
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let subItem = toDoItemCurrent?.subItems[indexPath.row]
+//        let tvc = storyboard?.instantiateViewController(identifier: "todoID") as! TableViewController
+//        tvc.toDoItemCurrent = subItem
+//        navigationController?.pushViewController(tvc, animated: true)
+//    }
     
     // MARK: - Delete cell
     
