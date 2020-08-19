@@ -18,7 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2CB24A9324E3CC8B001941EF /* Test task "Texode".app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test task \"Texode\".app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CB24A9324E3CC8B001941EF /* ToDo list.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ToDo list.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB24A9624E3CC8B001941EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CB24A9824E3CC8B001941EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2CB24A9D24E3CC8B001941EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 		2CB24A8A24E3CC8B001941EF = {
 			isa = PBXGroup;
 			children = (
-				2CB24A9524E3CC8B001941EF /* Test task "Texode" */,
+				2CB24A9524E3CC8B001941EF /* ToDo list */,
 				2CB24A9424E3CC8B001941EF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,12 +52,12 @@
 		2CB24A9424E3CC8B001941EF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2CB24A9324E3CC8B001941EF /* Test task "Texode".app */,
+				2CB24A9324E3CC8B001941EF /* ToDo list.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2CB24A9524E3CC8B001941EF /* Test task "Texode" */ = {
+		2CB24A9524E3CC8B001941EF /* ToDo list */ = {
 			isa = PBXGroup;
 			children = (
 				2CB24AAA24E3CCBB001941EF /* Model */,
@@ -69,7 +69,7 @@
 				2CB24AA124E3CC92001941EF /* LaunchScreen.storyboard */,
 				2CB24AA424E3CC92001941EF /* Info.plist */,
 			);
-			path = "Test task \"Texode\"";
+			path = "ToDo list";
 			sourceTree = "<group>";
 		};
 		2CB24AAA24E3CCBB001941EF /* Model */ = {
@@ -84,9 +84,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2CB24A9224E3CC8B001941EF /* Test task "Texode" */ = {
+		2CB24A9224E3CC8B001941EF /* ToDo list */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2CB24AA724E3CC92001941EF /* Build configuration list for PBXNativeTarget "Test task "Texode"" */;
+			buildConfigurationList = 2CB24AA724E3CC92001941EF /* Build configuration list for PBXNativeTarget "ToDo list" */;
 			buildPhases = (
 				2CB24A8F24E3CC8B001941EF /* Sources */,
 				2CB24A9024E3CC8B001941EF /* Frameworks */,
@@ -96,9 +96,9 @@
 			);
 			dependencies = (
 			);
-			name = "Test task \"Texode\"";
+			name = "ToDo list";
 			productName = "Test task \"Texode\"";
-			productReference = 2CB24A9324E3CC8B001941EF /* Test task "Texode".app */;
+			productReference = 2CB24A9324E3CC8B001941EF /* ToDo list.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -116,7 +116,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2CB24A8E24E3CC8B001941EF /* Build configuration list for PBXProject "Test task "Texode"" */;
+			buildConfigurationList = 2CB24A8E24E3CC8B001941EF /* Build configuration list for PBXProject "ToDo list" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -129,7 +129,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2CB24A9224E3CC8B001941EF /* Test task "Texode" */,
+				2CB24A9224E3CC8B001941EF /* ToDo list */,
 			);
 		};
 /* End PBXProject section */
@@ -301,12 +301,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "Test task \"Texode\"/Info.plist";
+				INFOPLIST_FILE = "ToDo list/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Ivan.Test-task--Texode-";
+				PRODUCT_BUNDLE_IDENTIFIER = "Ivan.ToDo-list";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -318,12 +318,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "Test task \"Texode\"/Info.plist";
+				INFOPLIST_FILE = "ToDo list/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Ivan.Test-task--Texode-";
+				PRODUCT_BUNDLE_IDENTIFIER = "Ivan.ToDo-list";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -333,7 +333,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2CB24A8E24E3CC8B001941EF /* Build configuration list for PBXProject "Test task "Texode"" */ = {
+		2CB24A8E24E3CC8B001941EF /* Build configuration list for PBXProject "ToDo list" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2CB24AA524E3CC92001941EF /* Debug */,
@@ -342,7 +342,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2CB24AA724E3CC92001941EF /* Build configuration list for PBXNativeTarget "Test task "Texode"" */ = {
+		2CB24AA724E3CC92001941EF /* Build configuration list for PBXNativeTarget "ToDo list" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2CB24AA824E3CC92001941EF /* Debug */,

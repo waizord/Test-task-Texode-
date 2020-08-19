@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Test task &quot;Texode&quot;.xcodeproj">
+      location = "self:/Users/ivan/Dev/Test task &quot;Texode&quot;/ToDo list.xcodeproj">
    </FileRef>
 </Workspace>
