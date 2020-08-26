@@ -1,50 +1,46 @@
-import UIKit
+import Foundation
 
-class TodoItem {
+struct TodoItem {
     var name: String
     var detail: String
     
-    lazy var subItems = [TodoItem]()
-    
+    var subItems = [TodoItem]()
 
-    init(name: String, detail: String) {
+    init(name: String, detail: String = "") {
         self.name = name
         self.detail = detail
     }
-    init(name: String) {
-        self.name = name
-        self.detail = ""
-    }
-    func addSubItem(subItem: TodoItem){
-        subItems.append(subItem)
-    }
+//    init(name: String) {
+//        self.name = name
+//        self.detail = ""
+//    }
     
-    func removeSubItem(index: Int){
-        subItems.remove(at: index)
-    }
-    
-    func renameSubItem(subItem: TodoItem, index: Int){
-        subItems.remove(at: index)
-        subItems.insert(subItem, at: index)
-    }
-// MARK: Save items
+    // MARK: Save items in direct
     init(dictionary: NSDictionary) {
         self.name = dictionary.object(forKey: "name") as! String
         self.detail = dictionary.object(forKey: "detail") as! String
         //self.isComplete = ((dictionary.object(forKey: "isComplete") ) != nil)
         
+        self.subItems = []
+        
         let arraySubToDos = dictionary.object(forKey: "subToDos") as! NSArray
         for subToDoDic in arraySubToDos {
+            
             self.subItems.append(TodoItem(dictionary: subToDoDic as! NSDictionary))
         }
     }
-    var dictionary: NSDictionary {
-        var arraySubToDos = NSArray()
-        for subitem in subItems{
-            arraySubToDos = arraySubToDos.adding(subitem.dictionary) as NSArray
-        }
-        let dictionary = NSDictionary(objects: [name, detail, arraySubToDos], forKeys: ["name" as NSCopying, "detail" as NSCopying, "subToDos" as NSCopying])
-        
-        return dictionary
+    
+    mutating func addSubItem(subItem: TodoItem){
+        subItems.append(subItem)
     }
+    
+    mutating func removeSubItem(index: Int){
+        subItems.remove(at: index)
+    }
+    
+    mutating func renameSubItem(subItem: TodoItem, index: Int){
+        subItems[index] = subItem
+    }
+    
+
 }

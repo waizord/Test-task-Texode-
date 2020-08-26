@@ -3,15 +3,14 @@ import UIKit
 class TableViewController: UITableViewController {
     
     var toDoItemCurrent: TodoItem?
+    var direct = Direct()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if toDoItemCurrent == nil {
-            toDoItemCurrent = rootItem
+        if let name = toDoItemCurrent?.name{
+            navigationItem.title = name
         }
-        
-        navigationItem.title = toDoItemCurrent?.name
     }
     
     @IBAction func pushAddAction(_ sender: Any) {
@@ -31,7 +30,7 @@ class TableViewController: UITableViewController {
                 self.toDoItemCurrent?.addSubItem(subItem: newItem)
                 
                 self.tableView.reloadData()
-                saveData()
+                self.direct.saveData()
             }
         }
         let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (_) in}
@@ -40,7 +39,7 @@ class TableViewController: UITableViewController {
         
         present(alert, animated: true, completion: nil)
         tableView.reloadData()
-        saveData()
+            direct.saveData()
     }
     
     @IBAction func longPressEditAction(_ sender: UILongPressGestureRecognizer) {
@@ -69,7 +68,7 @@ class TableViewController: UITableViewController {
                         self.toDoItemCurrent?.renameSubItem(subItem: newItem, index: indexPath.row)
                         
                         self.tableView.reloadData()
-                        saveData()
+                        self.direct.saveData()
                     }
                 }
                 let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (_) in}
@@ -115,7 +114,7 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             toDoItemCurrent?.removeSubItem(index: indexPath.row)
-            saveData()
+                direct.saveData()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
