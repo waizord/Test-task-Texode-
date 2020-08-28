@@ -35,13 +35,15 @@ class Direct {
     func loadData() {
         if let dict = NSDictionary.init(contentsOfFile: pathForSaveData){
             todoItems = TodoItem(dictionary: dict)
+            print("Load data")
         } else {
             todoItems = TodoItem(name: "List")
+            print("No data")
         }
     }
         
     func saveData(){
-        let dictionary = NSDictionary()
-        dictionary.write(toFile: pathForSaveData, atomically: true)
+        self.dictionary.write(toFile: pathForSaveData, atomically: true)
+        print("Save data")
     }
 }

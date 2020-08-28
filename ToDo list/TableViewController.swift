@@ -7,9 +7,10 @@ class TableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("Load view")
         if let name = toDoItem?.name{
             navigationItem.title = name
+            print("Navigation name \(name)")
         }
     }
     
@@ -31,6 +32,7 @@ class TableViewController: UITableViewController {
                 
                 self.tableView.reloadData()
                 self.direct.saveData()
+                print("Save create")
             }
         }
         let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (_) in}
@@ -38,16 +40,14 @@ class TableViewController: UITableViewController {
         alert.addAction(alertActionCancel)
         
         present(alert, animated: true, completion: nil)
-        tableView.reloadData()
-            direct.saveData()
     }
     
     @IBAction func longPressEditAction(_ sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
             let pointPress = sender.location(in: tableView)
-            //print(pointPress)
+            print(pointPress)
             if let indexPath = tableView.indexPathForRow(at: pointPress){
-                //print(indexPath)
+                print(indexPath)
             let cell = tableView.cellForRow(at: indexPath)
                 
                 let alert = UIAlertController(title: "Edit post", message: "", preferredStyle: .alert)
@@ -69,6 +69,7 @@ class TableViewController: UITableViewController {
                         
                         self.tableView.reloadData()
                         self.direct.saveData()
+                        print("Save edit")
                     }
                 }
                 let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (_) in}
@@ -86,7 +87,9 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(toDoItem, section)
         return toDoItem?.subItems.count ?? 1
+        
     }
 
     
