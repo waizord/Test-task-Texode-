@@ -10,12 +10,19 @@ import Foundation
 
 class Direct {
 
-    var todoItems: TodoItem?
-    
-//    init(todoItems: TodoItem) {
-//        self.todoItems = todoItems
-//    }
-    
+    var todoItems = TodoItem()
+
+    var dictionary: NSDictionary {
+
+        var arraySubToDos = NSArray()
+        for subitem in  todoItems.subItems {
+                arraySubToDos = arraySubToDos.adding(subitem) as NSArray
+            }
+        
+        let dictionary = NSDictionary(objects: [todoItems.name, todoItems.detail, arraySubToDos], forKeys: ["name" as NSCopying, "detail" as NSCopying, "subToDos" as NSCopying])
+        
+        return dictionary
+    }
     
     var pathForSaveData: String {
         let path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true) [0] + "/data.plist"
@@ -23,21 +30,7 @@ class Direct {
         return path
     }
     
-    var dictionary: NSDictionary {
 
-        var arraySubToDos = NSArray()
-        if let todoItems = todoItems {
-        for subitem in  todoItems.subItems {
-                arraySubToDos = arraySubToDos.adding(subitem) as NSArray
-            }
-        
-        
-            let dictionary = NSDictionary(objects: [todoItems.name, todoItems.detail, arraySubToDos], forKeys: ["name" as NSCopying, "detail" as NSCopying, "subToDos" as NSCopying])
-        
-        return dictionary
-        }
-        return NSDictionary()
-    }
     
     func loadData() {
         if let dict = NSDictionary.init(contentsOfFile: pathForSaveData){
@@ -48,6 +41,7 @@ class Direct {
     }
         
     func saveData(){
+        let dictionary = NSDictionary()
         dictionary.write(toFile: pathForSaveData, atomically: true)
     }
 }

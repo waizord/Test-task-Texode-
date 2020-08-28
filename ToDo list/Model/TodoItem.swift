@@ -6,7 +6,7 @@ struct TodoItem {
     
     var subItems = [TodoItem]()
 
-    init(name: String, detail: String = "") {
+    init(name: String = "", detail: String = "") {
         self.name = name
         self.detail = detail
     }
@@ -17,13 +17,13 @@ struct TodoItem {
     
     // MARK: Save items in direct
     init(dictionary: NSDictionary) {
-        self.name = dictionary.object(forKey: "name") as! String
-        self.detail = dictionary.object(forKey: "detail") as! String
+        self.name = dictionary.object(forKey: "name") as? String ?? ""
+        self.detail = dictionary.object(forKey: "detail") as? String ?? ""
         //self.isComplete = ((dictionary.object(forKey: "isComplete") ) != nil)
         
         self.subItems = []
         
-        let arraySubToDos = dictionary.object(forKey: "subToDos") as! NSArray
+        let arraySubToDos = dictionary.object(forKey: "subToDos") as? NSArray ?? []
         for subToDoDic in arraySubToDos {
             
             self.subItems.append(TodoItem(dictionary: subToDoDic as! NSDictionary))
