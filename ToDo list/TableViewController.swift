@@ -2,16 +2,13 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
-    var toDoItem: TodoItem?
+    var toDoItem = [TodoItem]()
     var direct = Direct()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Load view")
-        if let name = toDoItem?.name{
-            navigationItem.title = name
-            print("Navigation name \(name)")
-        }
+        navigationItem.title = "ToDo-list"
     }
     
     @IBAction func pushAddAction(_ sender: Any) {
@@ -19,19 +16,20 @@ class TableViewController: UITableViewController {
         let alert = UIAlertController(title: "Create new item", message: "", preferredStyle: .alert)
         alert.addTextField { (textName) in
             textName.placeholder = "Title 1/250"
-            
         }
         alert.addTextField { (textDetail) in
             textDetail.placeholder = "Message 1/1000"
-            
         }
+        
         let alertActionCrate = UIAlertAction(title: "Create", style: .default) { (_) in
             if alert.textFields![0].text != ""{
-                let newItem = TodoItem(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
-                self.toDoItem?.addSubItem(subItem: newItem)
                 
-                self.tableView.reloadData()
+                let newItem = TodoItem(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
+                self.toDoItem.append(newItem)
+                
                 self.direct.saveData()
+                self.tableView.reloadData()
+                
                 print("Save create")
             }
         }
@@ -65,10 +63,11 @@ class TableViewController: UITableViewController {
                 let alertActionEdit = UIAlertAction(title: "Edit", style: .default) { (_) in
                     if alert.textFields![0].text != ""{
                         let newItem = TodoItem(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
-                        self.toDoItem?.renameSubItem(subItem: newItem, index: indexPath.row)
+                        self.toDoItem[indexPath.row] = newItem
                         
-                        self.tableView.reloadData()
                         self.direct.saveData()
+                        self.tableView.reloadData()
+                        
                         print("Save edit")
                     }
                 }
@@ -87,36 +86,25 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(toDoItem, section)
-        return toDoItem?.subItems.count ?? 1
+        print(toDoItem)
+        return toDoItem.count
         
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        let itemForCell = toDoItem?.subItems[indexPath.row]
-        cell.textLabel?.text = itemForCell?.name
-        if let text = itemForCell?.detail {
-            cell.detailTextLabel?.text = text
-        }
+        let itemForCell = toDoItem[indexPath.row]
+        cell.textLabel?.text = itemForCell.name
+        cell.detailTextLabel?.text = itemForCell.detail
         return cell
     }
-    
-    // MARK: - Next view
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let subItem = toDoItem?.subItems[indexPath.row]
-//        let tvc = storyboard?.instantiateViewController(identifier: "todoID") as! TableViewController
-//        tvc.toDoItem = subItem
-//        navigationController?.pushViewController(tvc, animated: true)
-//    }
     
     // MARK: - Delete cell
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            toDoItem?.removeSubItem(index: indexPath.row)
+            toDoItem.remove(at: indexPath.row)
                 direct.saveData()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }

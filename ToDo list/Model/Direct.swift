@@ -13,13 +13,7 @@ class Direct {
     var todoItems = TodoItem()
 
     var dictionary: NSDictionary {
-
-        var arraySubToDos = NSArray()
-        for subitem in  todoItems.subItems {
-                arraySubToDos = arraySubToDos.adding(subitem) as NSArray
-            }
-        
-        let dictionary = NSDictionary(objects: [todoItems.name, todoItems.detail, arraySubToDos], forKeys: ["name" as NSCopying, "detail" as NSCopying, "subToDos" as NSCopying])
+        let dictionary = NSDictionary(objects: [todoItems.name, todoItems.detail], forKeys: ["name" as NSCopying, "detail" as NSCopying])
         
         return dictionary
     }
@@ -29,8 +23,6 @@ class Direct {
         print(path)
         return path
     }
-    
-
     
     func loadData() {
         if let dict = NSDictionary.init(contentsOfFile: pathForSaveData){
@@ -43,7 +35,7 @@ class Direct {
     }
         
     func saveData(){
-        self.dictionary.write(toFile: pathForSaveData, atomically: true)
-        print("Save data")
+        dictionary.write(toFile: pathForSaveData, atomically: true)
+        print("Save data\(dictionary)")
     }
 }
