@@ -2,16 +2,13 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
-    var toDoItemCurrent: TodoItem?
+    var direct = Direct()
+    var todoItem = TodoItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if toDoItemCurrent == nil {
-            toDoItemCurrent = rootItem
-        }
-        
-        navigationItem.title = toDoItemCurrent?.name
+        print("Load view")
+        navigationItem.title = "ToDo-list"
     }
     
     @IBAction func pushAddAction(_ sender: Any) {
@@ -19,19 +16,21 @@ class TableViewController: UITableViewController {
         let alert = UIAlertController(title: "Create new item", message: "", preferredStyle: .alert)
         alert.addTextField { (textName) in
             textName.placeholder = "Title 1/250"
-            
         }
         alert.addTextField { (textDetail) in
             textDetail.placeholder = "Message 1/1000"
-            
         }
+        
         let alertActionCrate = UIAlertAction(title: "Create", style: .default) { (_) in
             if alert.textFields![0].text != ""{
-                let newItem = TodoItem(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
-                self.toDoItemCurrent?.addSubItem(subItem: newItem)
                 
+                let newItem = TodoItem(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
+                self.todoItem.items.append(newItem)
+                
+                self.direct.saveData()
                 self.tableView.reloadData()
-                saveData()
+                
+                print("Save create")
             }
         }
         let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (_) in}
@@ -39,16 +38,14 @@ class TableViewController: UITableViewController {
         alert.addAction(alertActionCancel)
         
         present(alert, animated: true, completion: nil)
-        tableView.reloadData()
-        saveData()
     }
     
     @IBAction func longPressEditAction(_ sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
             let pointPress = sender.location(in: tableView)
-            //print(pointPress)
+            print(pointPress)
             if let indexPath = tableView.indexPathForRow(at: pointPress){
-                //print(indexPath)
+                print(indexPath)
             let cell = tableView.cellForRow(at: indexPath)
                 
                 let alert = UIAlertController(title: "Edit post", message: "", preferredStyle: .alert)
@@ -66,10 +63,12 @@ class TableViewController: UITableViewController {
                 let alertActionEdit = UIAlertAction(title: "Edit", style: .default) { (_) in
                     if alert.textFields![0].text != ""{
                         let newItem = TodoItem(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
-                        self.toDoItemCurrent?.renameSubItem(subItem: newItem, index: indexPath.row)
+                        self.todoItem.items[indexPath.row] = newItem
                         
+                        self.direct.saveData()
                         self.tableView.reloadData()
-                        saveData()
+                        
+                        print("Save edit")
                     }
                 }
                 let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (_) in}
@@ -87,35 +86,26 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return toDoItemCurrent?.subItems.count ?? 1
+        print(todoItem)
+        return todoItem.items.count
+        
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        let itemForCell = toDoItemCurrent?.subItems[indexPath.row]
-        cell.textLabel?.text = itemForCell?.name
-        if let text = itemForCell?.detail {
-            cell.detailTextLabel?.text = text
-        }
+        let itemForCell = todoItem.items[indexPath.row]
+        cell.textLabel?.text = itemForCell.name
+        cell.detailTextLabel?.text = itemForCell.detail
         return cell
     }
-    
-    // MARK: - Next view
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let subItem = toDoItemCurrent?.subItems[indexPath.row]
-//        let tvc = storyboard?.instantiateViewController(identifier: "todoID") as! TableViewController
-//        tvc.toDoItemCurrent = subItem
-//        navigationController?.pushViewController(tvc, animated: true)
-//    }
     
     // MARK: - Delete cell
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            toDoItemCurrent?.removeSubItem(index: indexPath.row)
-            saveData()
+            todoItem.items.remove(at: indexPath.row)
+                direct.saveData()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
