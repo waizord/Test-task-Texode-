@@ -11,10 +11,10 @@ import Foundation
 class Direct {
 
     var todoItems = TodoItem()
-
+    
     var dictionary: NSDictionary {
-        let dictionary = NSDictionary(objects: [todoItems.name, todoItems.detail], forKeys: ["name" as NSCopying, "detail" as NSCopying])
-        
+        let dictionary = NSDictionary(objects: [todoItems.name, todoItems.detail, todoItems.items], forKeys: ["name" as NSCopying, "detail" as NSCopying, "items" as NSCopying])
+        print("Dict is \(dictionary)")
         return dictionary
     }
     
@@ -25,11 +25,11 @@ class Direct {
     }
     
     func loadData() {
-        if let dict = NSDictionary.init(contentsOfFile: pathForSaveData){
+        if let dict = NSDictionary(contentsOfFile: pathForSaveData){
             todoItems = TodoItem(dictionary: dict)
-            print("Load data")
+            print("Load data \(todoItems.name)")
         } else {
-            todoItems = TodoItem(name: "List")
+            todoItems = TodoItem(name: "List", detail: "")
             print("No data")
         }
     }

@@ -2,8 +2,8 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
-    var toDoItem = [TodoItem]()
     var direct = Direct()
+    var todoItem = TodoItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class TableViewController: UITableViewController {
             if alert.textFields![0].text != ""{
                 
                 let newItem = TodoItem(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
-                self.toDoItem.append(newItem)
+                self.todoItem.items.append(newItem)
                 
                 self.direct.saveData()
                 self.tableView.reloadData()
@@ -63,7 +63,7 @@ class TableViewController: UITableViewController {
                 let alertActionEdit = UIAlertAction(title: "Edit", style: .default) { (_) in
                     if alert.textFields![0].text != ""{
                         let newItem = TodoItem(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
-                        self.toDoItem[indexPath.row] = newItem
+                        self.todoItem.items[indexPath.row] = newItem
                         
                         self.direct.saveData()
                         self.tableView.reloadData()
@@ -86,15 +86,15 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(toDoItem)
-        return toDoItem.count
+        print(todoItem)
+        return todoItem.items.count
         
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        let itemForCell = toDoItem[indexPath.row]
+        let itemForCell = todoItem.items[indexPath.row]
         cell.textLabel?.text = itemForCell.name
         cell.detailTextLabel?.text = itemForCell.detail
         return cell
@@ -104,7 +104,7 @@ class TableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            toDoItem.remove(at: indexPath.row)
+            todoItem.items.remove(at: indexPath.row)
                 direct.saveData()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
