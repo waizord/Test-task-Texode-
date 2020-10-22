@@ -4,13 +4,14 @@ struct TodoItem {
     var name: String
     var detail: String
     var items: [TodoItem]
+    
     init(name: String = "", detail: String = "") {
         self.name = name
         self.detail = detail
         self.items = []
     }
     
-    // MARK: Save items in direct
+    // MARK: Load items from direct
     
     init(dictionary: NSDictionary) {
         self.name = dictionary.object(forKey: "name") as! String

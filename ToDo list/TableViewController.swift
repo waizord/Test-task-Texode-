@@ -1,14 +1,20 @@
 import UIKit
-
+import CoreData
 class TableViewController: UITableViewController {
     
     var direct = Direct()
     var todoItem = TodoItem()
     
+    var container: NSPersistentContainer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         print("Load view")
+        print(todoItem)
         navigationItem.title = "ToDo-list"
+        
+        guard container != nil else {return print("This view needs a persistent container.")}
     }
     
     @IBAction func pushAddAction(_ sender: Any) {
@@ -86,7 +92,7 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(todoItem)
+        //print(todoItem)
         return todoItem.items.count
         
     }
