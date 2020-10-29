@@ -33,10 +33,13 @@ class TableViewController: UITableViewController {
                 let newItem = TodoItem(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
                 self.todoItem.items.append(newItem)
                 
-                self.direct.saveData()
-                self.tableView.reloadData()
                 
-                print("Save create")
+                
+                
+//                self.direct.saveData()
+//                self.tableView.reloadData()
+//
+//                print("Save create")
             }
         }
         let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (_) in}
