@@ -2,21 +2,30 @@ import UIKit
 import CoreData
 class TableViewController: UITableViewController {
     
-    var direct = Direct()
-    var todoItem = TodoItem()
+    var todoItem = [Tasks]()
     
-    var container: NSPersistentContainer!
+    var context: NSManagedObjectContext = {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        return context
+    }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let fetchRequest: NSFetchRequest<Tasks> = Tasks.fetchRequest()
+        do {
+            todoItem = try context.fetch(fetchRequest)
+        } catch let err as NSError {
+            print(err.localizedDescription)
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print("Load view")
-        print(todoItem)
         navigationItem.title = "ToDo-list"
-        
-        guard container != nil else {return print("This view needs a persistent container.")}
     }
-    
     @IBAction func pushAddAction(_ sender: Any) {
         
         let alert = UIAlertController(title: "Create new item", message: "", preferredStyle: .alert)
@@ -30,16 +39,10 @@ class TableViewController: UITableViewController {
         let alertActionCrate = UIAlertAction(title: "Create", style: .default) { (_) in
             if alert.textFields![0].text != ""{
                 
-                let newItem = TodoItem(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
-                self.todoItem.items.append(newItem)
+                self.saveTasks(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
+                self.tableView.reloadData()
                 
-                
-                
-                
-//                self.direct.saveData()
-//                self.tableView.reloadData()
-//
-//                print("Save create")
+                print("TableView did save and reload Data")
             }
         }
         let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (_) in}
@@ -71,11 +74,13 @@ class TableViewController: UITableViewController {
         
                 let alertActionEdit = UIAlertAction(title: "Edit", style: .default) { (_) in
                     if alert.textFields![0].text != ""{
-                        let newItem = TodoItem(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
-                        self.todoItem.items[indexPath.row] = newItem
+//                        let newItem = Tasks()
+//                        newItem.name = alert.textFields![0].text!
+//                        newItem.detail = alert.textFields![1].text!
+//                        self.todoItem[indexPath.row] = newItem
                         
-                        self.direct.saveData()
-                        self.tableView.reloadData()
+//                        self.direct.saveData()
+//                        self.tableView.reloadData()
                         
                         print("Save edit")
                     }
@@ -88,6 +93,19 @@ class TableViewController: UITableViewController {
             }
         }
     }
+    // MARK: - Save in Core Data
+    func saveTasks(name: String, detail: String){
+        guard let entity = NSEntityDescription.entity(forEntityName: "Tasks", in: context) else {return}
+        let taskObject = Tasks(entity: entity, insertInto: context)
+        taskObject.name = name
+        taskObject.detail = detail
+        do {
+            try context.save()
+            todoItem.append(taskObject)
+        } catch let err as NSError {
+            print(err.localizedDescription)
+        }
+    }
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -96,14 +114,14 @@ class TableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //print(todoItem)
-        return todoItem.items.count
+        return todoItem.count
         
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        let itemForCell = todoItem.items[indexPath.row]
+        let itemForCell = todoItem[indexPath.row]
         cell.textLabel?.text = itemForCell.name
         cell.detailTextLabel?.text = itemForCell.detail
         return cell
@@ -113,8 +131,8 @@ class TableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            todoItem.items.remove(at: indexPath.row)
-                direct.saveData()
+            todoItem.remove(at: indexPath.row)
+            //save
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
