@@ -76,15 +76,11 @@ class TableViewController: UITableViewController {
                         
                         let name = alert.textFields![0].text!
                         let detail = alert.textFields![1].text!
-                        guard let entity = NSEntityDescription.entity(forEntityName: "Tasks", in: self.context) else {return}
-                        let taskObject = Tasks(entity: entity, insertInto: self.context)
-                        taskObject.name = name
-                        taskObject.detail = detail
-                        self.todoItem[indexPath.row] = taskObject
+                        self.todoItem[indexPath.row].name = name
+                        self.todoItem[indexPath.row].detail = detail
                         
-                        let fetchRequest: NSFetchRequest<Tasks> = Tasks.fetchRequest()
-                        if var todoItems = try? self.context.fetch(fetchRequest){
-                            todoItems[indexPath.row] = taskObject
+                        if self.context.hasChanges{
+                            self.saveTasks()
                         }
                         
                         self.saveTasks()
