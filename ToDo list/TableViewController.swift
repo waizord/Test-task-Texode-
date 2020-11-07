@@ -74,7 +74,20 @@ class TableViewController: UITableViewController {
                 let alertActionEdit = UIAlertAction(title: "Edit", style: .default) { (_) in
                     if alert.textFields![0].text != ""{
                         
-//                        self.saveTasks(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
+                        let name = alert.textFields![0].text!
+                        let detail = alert.textFields![1].text!
+                        guard let entity = NSEntityDescription.entity(forEntityName: "Tasks", in: self.context) else {return}
+                        let taskObject = Tasks(entity: entity, insertInto: self.context)
+                        taskObject.name = name
+                        taskObject.detail = detail
+                        self.todoItem[indexPath.row] = taskObject
+                        
+                        let fetchRequest: NSFetchRequest<Tasks> = Tasks.fetchRequest()
+                        if var todoItems = try? self.context.fetch(fetchRequest){
+                            todoItems[indexPath.row] = taskObject
+                        }
+                        
+                        self.saveTasks()
                         self.tableView.reloadData()
                         
                         print("Save edit")
