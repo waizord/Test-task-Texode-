@@ -7,8 +7,8 @@
 //
 import CoreData
 
-class PersistantContainer: NSPersistentContainer  {
-    func saveContext(backgroungContext: NSManagedObjectContext?){
+open class PersistantContainer: NSPersistentContainer  {
+    public func saveContext(backgroungContext: NSManagedObjectContext?){
         let context = backgroungContext ?? viewContext
         guard context.hasChanges else {return}
         do{

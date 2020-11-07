@@ -12,13 +12,7 @@ class TableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        let fetchRequest: NSFetchRequest<Tasks> = Tasks.fetchRequest()
-        do {
-            todoItem = try context.fetch(fetchRequest)
-        } catch let err as NSError {
-            print(err.localizedDescription)
-        }
+        fetchRequest()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +20,8 @@ class TableViewController: UITableViewController {
         print("Load view")
         navigationItem.title = "ToDo-list"
     }
+    
     @IBAction func pushAddAction(_ sender: Any) {
-        
         let alert = UIAlertController(title: "Create new item", message: "", preferredStyle: .alert)
         alert.addTextField { (textName) in
             textName.placeholder = "Title 1/250"
@@ -39,10 +33,15 @@ class TableViewController: UITableViewController {
         let alertActionCrate = UIAlertAction(title: "Create", style: .default) { (_) in
             if alert.textFields![0].text != ""{
                 
-                self.saveTasks(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
+                let name = alert.textFields![0].text!
+                let detail = alert.textFields![1].text!
+                guard let entity = NSEntityDescription.entity(forEntityName: "Tasks", in: self.context) else {return}
+                let taskObject = Tasks(entity: entity, insertInto: self.context)
+                taskObject.name = name
+                taskObject.detail = detail
+                self.todoItem.append(taskObject)
+                self.saveTasks()
                 self.tableView.reloadData()
-                
-                print("TableView did save and reload Data")
             }
         }
         let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (_) in}
@@ -58,7 +57,7 @@ class TableViewController: UITableViewController {
             print(pointPress)
             if let indexPath = tableView.indexPathForRow(at: pointPress){
                 print(indexPath)
-            let cell = tableView.cellForRow(at: indexPath)
+                let cell = tableView.cellForRow(at: indexPath)
                 
                 let alert = UIAlertController(title: "Edit post", message: "", preferredStyle: .alert)
                 alert.addTextField { (textName) in
@@ -71,16 +70,12 @@ class TableViewController: UITableViewController {
                         textDetail.text = detail
                     }
                 }
-        
+                
                 let alertActionEdit = UIAlertAction(title: "Edit", style: .default) { (_) in
                     if alert.textFields![0].text != ""{
-//                        let newItem = Tasks()
-//                        newItem.name = alert.textFields![0].text!
-//                        newItem.detail = alert.textFields![1].text!
-//                        self.todoItem[indexPath.row] = newItem
                         
-//                        self.direct.saveData()
-//                        self.tableView.reloadData()
+//                        self.saveTasks(name: alert.textFields![0].text!, detail: alert.textFields![1].text!)
+                        self.tableView.reloadData()
                         
                         print("Save edit")
                     }
@@ -93,34 +88,39 @@ class TableViewController: UITableViewController {
             }
         }
     }
-    // MARK: - Save in Core Data
-    func saveTasks(name: String, detail: String){
-        guard let entity = NSEntityDescription.entity(forEntityName: "Tasks", in: context) else {return}
-        let taskObject = Tasks(entity: entity, insertInto: context)
-        taskObject.name = name
-        taskObject.detail = detail
+    // MARK: - Save and fetchRequest in Core Data
+    func saveTasks(){
         do {
             try context.save()
-            todoItem.append(taskObject)
+            print("TableView data did save")
         } catch let err as NSError {
             print(err.localizedDescription)
         }
     }
-    // MARK: - Table view data source
 
+    func fetchRequest(){
+        let fetchRequest: NSFetchRequest<Tasks> = Tasks.fetchRequest()
+        do {
+            todoItem = try context.fetch(fetchRequest)
+        } catch let err as NSError {
+            print(err.localizedDescription)
+        }
+    }
+    
+    // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //print(todoItem)
         return todoItem.count
         
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-
+        
         let itemForCell = todoItem[indexPath.row]
         cell.textLabel?.text = itemForCell.name
         cell.detailTextLabel?.text = itemForCell.detail
@@ -128,12 +128,19 @@ class TableViewController: UITableViewController {
     }
     
     // MARK: - Delete cell
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             todoItem.remove(at: indexPath.row)
-            //save
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            let fetchRequest: NSFetchRequest<Tasks> = Tasks.fetchRequest()
+            if let todoItems = try? context.fetch(fetchRequest){
+                context.delete(todoItems[indexPath.row])
+                
+                print("TodoItem has be remove")
+                self.saveTasks()
+                tableView.reloadData()
+            }
         }
     }
 }
