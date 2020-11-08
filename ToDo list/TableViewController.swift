@@ -79,14 +79,9 @@ class TableViewController: UITableViewController {
                         self.todoItem[indexPath.row].name = name
                         self.todoItem[indexPath.row].detail = detail
                         
-                        if self.context.hasChanges{
-                            self.saveTasks()
-                        }
-                        
                         self.saveTasks()
-                        self.tableView.reloadData()
-                        
                         print("Save edit")
+                        self.tableView.reloadData()
                     }
                 }
                 let alertActionCancel = UIAlertAction(title: "Cancel", style: .default) { (_) in}
@@ -106,7 +101,7 @@ class TableViewController: UITableViewController {
             print(err.localizedDescription)
         }
     }
-
+    
     func fetchRequest(){
         let fetchRequest: NSFetchRequest<Tasks> = Tasks.fetchRequest()
         do {
