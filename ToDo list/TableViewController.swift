@@ -31,8 +31,8 @@ class TableViewController: UITableViewController {
         }
         
         let alertActionCrate = UIAlertAction(title: "Create", style: .default) { (_) in
-            if alert.textFields![0].text != ""{
-                
+            if alert.textFields![0].text != "" && alert.textFields![0].text?.first != " "{
+            
                 let name = alert.textFields![0].text!
                 let detail = alert.textFields![1].text!
                 guard let entity = NSEntityDescription.entity(forEntityName: "Tasks", in: self.context) else {return}
@@ -72,7 +72,7 @@ class TableViewController: UITableViewController {
                 }
                 
                 let alertActionEdit = UIAlertAction(title: "Edit", style: .default) { (_) in
-                    if alert.textFields![0].text != ""{
+                    if alert.textFields![0].text != "" && alert.textFields![0].text?.first != " "{
                         
                         let name = alert.textFields![0].text!
                         let detail = alert.textFields![1].text!
