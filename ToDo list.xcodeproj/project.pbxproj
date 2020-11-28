@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2C2EE55325423399006BFB5F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EE55125423399006BFB5F /* Model.xcdatamodeld */; };
-		2C2EE55725423E74006BFB5F /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EE55625423E74006BFB5F /* CoreData.swift */; };
 		2C42E70A24EEF5B50056B485 /* Direct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C42E70924EEF5B50056B485 /* Direct.swift */; };
 		2CB24A9724E3CC8B001941EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB24A9624E3CC8B001941EF /* AppDelegate.swift */; };
 		2CB24A9924E3CC8B001941EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB24A9824E3CC8B001941EF /* SceneDelegate.swift */; };
@@ -21,7 +20,6 @@
 
 /* Begin PBXFileReference section */
 		2C2EE55225423399006BFB5F /* DataBase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataBase.xcdatamodel; sourceTree = "<group>"; };
-		2C2EE55625423E74006BFB5F /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		2C42E70924EEF5B50056B485 /* Direct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Direct.swift; sourceTree = "<group>"; };
 		2CB24A9324E3CC8B001941EF /* ToDo list.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ToDo list.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB24A9624E3CC8B001941EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,7 +66,6 @@
 				2CB24A9624E3CC8B001941EF /* AppDelegate.swift */,
 				2CB24A9824E3CC8B001941EF /* SceneDelegate.swift */,
 				2CB24AAF24E3CF03001941EF /* TableViewController.swift */,
-				2C2EE55625423E74006BFB5F /* CoreData.swift */,
 				2CB24A9C24E3CC8B001941EF /* Main.storyboard */,
 				2CB24A9F24E3CC92001941EF /* Assets.xcassets */,
 				2CB24AA124E3CC92001941EF /* LaunchScreen.storyboard */,
@@ -162,7 +159,6 @@
 				2C42E70A24EEF5B50056B485 /* Direct.swift in Sources */,
 				2C2EE55325423399006BFB5F /* Model.xcdatamodeld in Sources */,
 				2CB24AAC24E3CCF5001941EF /* TodoItem.swift in Sources */,
-				2C2EE55725423E74006BFB5F /* CoreData.swift in Sources */,
 				2CB24AB024E3CF03001941EF /* TableViewController.swift in Sources */,
 				2CB24A9924E3CC8B001941EF /* SceneDelegate.swift in Sources */,
 			);
